@@ -1,0 +1,16 @@
+input:
+  generate: 
+    interval: '@every 10s'
+    count: 5
+    mapping: root = {"name":"Giuseppe", "age":31}
+
+pipeline:
+  processors: []
+
+# Common config fields, showing default values
+output:
+  label: ""
+  http_client:
+    url: "http://192.168.1.241:4195/post" # No default (required)
+    verb: POST
+    

@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  benthos_server:
+    image: jeffail/benthos
+    container_name: server_benthos
+    volumes:
+      - ./config_benthos/server_config.yaml:/config.yaml
+    command: ["-c", "/config.yaml"]
+    ports:
+      - "4195:4195"
