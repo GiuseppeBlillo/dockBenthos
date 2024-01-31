@@ -1,0 +1,22 @@
+version: "3"
+
+services:  
+  mosquitto_container:
+    image: eclipse-mosquitto
+    restart: always
+    container_name: mqtt_container
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./config/config_mosquitto:/mosquitto/config:rw
+      - ./config/config_mosquitto:/mosquitto/data:rw
+      - ./config/config_mosquitto:/mosquitto/log:rw
+  
+  benthos_mqtt:
+    image: jeffail/benthos
+    container_name: mqtt_benthos_
+    volumes:
+      - ./config/config_benthos/mqtt_mongo_config.yaml:/config.yaml
+    command: ["-c", "/config.yaml"]
+    ports:
+      - "4196:4195"

@@ -1,0 +1,44 @@
+# Common config fields, showing default values
+input:
+  label: ""
+  http_server:
+    address: ""
+    path: /post
+    allowed_verbs:
+      - POST
+
+pipeline:
+  processors: []
+
+# # Config fields, showing default values
+# output:
+#   label: ""
+#   stdout:
+#     codec: lines
+
+# Common config fields, showing default values
+output:
+  label: ""
+  mongodb:
+    url: mongodb://192.168.1.241:27017 # No default (required)
+    database: "testBenthos" # No default (required)
+    username: "root"
+    password: "example"
+    collection: "userlist" # No default (required)
+    operation: insert-one
+    write_concern:
+      w: "majority"
+      j: false
+      w_timeout: ""
+    document_map: |-
+      root.name = this.name
+    filter_map: ""
+    hint_map: ""
+    upsert: false
+    max_in_flight: 64
+    batching:
+      count: 0
+      byte_size: 0
+      period: ""
+      check: ""
+    

@@ -1,8 +1,12 @@
+# input:
+#   generate: 
+#     interval: '@every 10s'
+#     count: 5
+#     mapping: root = {$name:"Giuseppe"}
 input:
-  generate: 
-    interval: '@every 10s'
-    count: 5
-    mapping: root = {"name":"Giuseppe", "age":31}
+  generate:
+    interval: '@every 2s'
+    mapping: root = {"name":"giuseppe"}
 
 pipeline:
   processors: []

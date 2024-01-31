@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  redis:
+    image: redis
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"    
+    environment:
+      - REDIS_PASSWORD=my-password
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=2
+    volumes:
+      - ./config/config_redis/data:/root/redis
+      - ./config/config_redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+  redisinsight:
+    image: redislabs/redisinsight
+    container_name: redisInsight
+    ports:
+      - '8001:8001'
