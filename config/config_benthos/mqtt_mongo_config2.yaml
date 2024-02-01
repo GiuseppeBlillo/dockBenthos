@@ -1,0 +1,40 @@
+# Common config fields, showing default values
+input:  
+  mqtt:
+    urls: 
+      - mqtt://192.168.0.189:1883 # No default (required)
+    client_id: "home" 
+    topics:
+      - school/class/students # No default (required)
+
+# Common config fields, showing default values
+pipeline:
+  processors: 
+    - mapping: |
+        root = this
+        root.ts = now().ts_format("Mon 2-Jan-2006 15:04", "CET")
+        root.firstname = match {
+        this.firstname.uppercase() == "GIUSEPPE" => deleted()
+        }
+
+# Common config fields, showing default values
+output:
+  broker:
+    pattern: fan_out
+    outputs:
+
+    - mongodb:
+        url: mongodb://192.168.0.189:27017 # No default (required)
+        database: "testBenthos" # No default (required)
+        username: "root"
+        password: "example"
+        collection: "studentList" # No default (required)
+        operation: update-one  # Not required 
+        document_map: |-
+          root.firstname = this.firstname
+          root.lastname = this.lastname
+        filter_map: |-
+          root.id = this.id
+        upsert: true
+
+

@@ -1,0 +1,36 @@
+# Common config fields, showing default values
+input:  
+  mqtt:
+    urls: 
+      - mqtt://192.168.0.189:1883 # No default (required)
+    client_id: "client" 
+    topics:
+      - /merakimv/devices # No default (required)
+
+# Common config fields, showing default values
+pipeline:
+  processors: 
+    - mapping: |
+        root = this
+        root.notes = if (this.firmware == "v5.5") {
+          "current_version"
+        } else {
+          "upgrade_available"
+        }
+
+
+# Common config fields, showing default values
+output:
+  mongodb:
+    url: mongodb://192.168.0.189:27017 # No default (required)
+    database: "testBenthos" # No default (required)
+    username: "root"
+    password: "example"
+    collection: "devices" # No default (required)
+    operation: insert-one
+    document_map: |-
+      root = this
+    write_concern:
+      w: "majority"
+      j: false
+      w_timeout: ""
