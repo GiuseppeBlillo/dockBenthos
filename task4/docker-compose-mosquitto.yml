@@ -4,7 +4,7 @@ services:
   mosquitto_container:
     image: eclipse-mosquitto
     restart: always
-    container_name: mqtt_container
+    container_name: mqtt_container4
     ports:
       - "1883:1883"
     volumes:
@@ -14,7 +14,7 @@ services:
   
   benthos_mqtt:
     image: jeffail/benthos
-    container_name: mqtt_benthos_
+    container_name: mqtt_benthos_4
     volumes:
       - ./config/config_benthos/mqtt_mongo_config.yaml:/config.yaml
     command: ["-c", "/config.yaml"]

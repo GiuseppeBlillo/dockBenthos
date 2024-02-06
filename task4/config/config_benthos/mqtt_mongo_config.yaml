@@ -2,13 +2,10 @@
 input:  
   mqtt:
     urls: 
-      - mqtt://192.168.0.189:1883 # No default (required)
+      - mqtt://192.168.1.241:1883
     client_id: "client" 
     topics:
-      - /merakimv/devices # No default (required)
-
-# Common config fields, showing default values
-pipeline:
+      - /merakimv/devices
   processors: 
     - mapping: |
         root = this
@@ -17,20 +14,29 @@ pipeline:
         } else {
           "upgrade_available"
         }
+    
 
+# Common config fields, showing default values
+pipeline:
+  processors: []
+        
 
 # Common config fields, showing default values
 output:
   mongodb:
-    url: mongodb://192.168.0.189:27017 # No default (required)
-    database: "testBenthos" # No default (required)
+    url: mongodb://192.168.1.241:27017
+    database: "testBenthos" 
     username: "root"
     password: "example"
-    collection: "devices" # No default (required)
-    operation: insert-one
-    document_map: |-
-      root = this
-    write_concern:
-      w: "majority"
+    collection: "devices" 
+    operation: update-one
+    write_concern:                      
+      w: majority
       j: false
       w_timeout: ""
+    upsert: true
+    document_map: |-
+      {"$set": {"name": this.name, "ts": this.ts, "tenant": this.tenant, "networkId": this.networkId, "firmware": this.firmware, "notes": this.notes}}
+    filter_map: |-
+      root.serial = this.serial
+      
