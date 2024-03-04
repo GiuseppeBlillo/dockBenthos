@@ -1,0 +1,13 @@
+version: '3'
+
+
+services:
+  mosquitto_container:
+    image: eclipse-mosquitto
+    container_name: mqtt_redis
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./config/config_mosquitto:/mosquitto/config:rw
+      - ./config/config_mosquitto:/mosquitto/data:rw
+      - ./config/config_mosquitto:/mosquitto/log:rw

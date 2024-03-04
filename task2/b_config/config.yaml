@@ -1,0 +1,21 @@
+input:
+  redis_pubsub:
+    url: redis://localhost:6379
+    channels: [saluti]
+
+pipeline:
+  processors:
+    - mapping: |
+        root = if content().string() == "ciao"{ "buongiorno" }
+
+output:
+  broker:
+    pattern: fan_out_sequential
+    outputs: 
+      - mqtt:
+          urls: 
+            - mqtt://localhost:1883 
+          topic: "saluti" 
+      - redis_list:
+          url: redis://localhost:6379 
+          key: saluti_list 
