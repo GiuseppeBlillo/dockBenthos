@@ -5,7 +5,7 @@ services:
     image: jeffail/benthos
     container_name: benthos_redis
     volumes:
-      - ./config.yaml:/config.yaml
+      - ./b_config/config.yaml:/config.yaml
     command: ["-c", "/config.yaml"]
     ports:
       - "4197:4195"

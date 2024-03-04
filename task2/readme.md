@@ -3,7 +3,7 @@ L'applicativo prende in input dei messaggi MQTT in formato RAW da un canale defi
 ```
 input:
   redis_pubsub:
-    url: redis://192.168.0.200:6379
+    url: redis://localhost:6379
     channels: [saluti]
 ```
 un esempio che può essere inviato tramite terminale può essere il seguente:
@@ -25,10 +25,10 @@ output:
     outputs: 
       - mqtt:
           urls: 
-            - mqtt://192.168.0.200:1883 
+            - mqtt://localhost:1883 
           topic: "saluti" 
       - redis_list:
-          url: redis://192.168.0.200:6379 
+          url: redis://localhost:6379 
           key: saluti_list 
 ``` 
 ## Link Utili
