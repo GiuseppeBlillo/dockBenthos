@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:  
+  benthos_chouse:
+    image: jeffail/benthos
+    container_name: bchouse
+    volumes:
+      - ./b_config/chouse.yaml:/config.yaml
+    command: ["-c", "/config.yaml"]
+    ports:
+      - "4196:4195"

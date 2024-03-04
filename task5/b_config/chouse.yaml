@@ -1,0 +1,31 @@
+input:
+  sql_select:
+    driver: "clickhouse" 
+    dsn: clickhouse://default@localhost:9000/testdb? 
+    table: users
+    columns: [NAME, AGE, GENDER]
+
+pipeline:
+  processors:
+    - mapping: |
+        root = this.without("NAME")
+        root.FIRSTNAME = this.NAME.capitalize()
+        root.LASTNAME = fake("last_name")
+        
+# if using sql_insert use this in the mapping processor:
+# root.ID = fake("uuid_hyphenated")
+
+# output:
+#   sql_raw:
+#     driver: "clickhouse" 
+#     dsn: clickhouse://default@host:9000/testdb?
+#     query: INSERT INTO hydrated_users (ID, AGE, GENDER, LASTNAME, FIRSTNAME, ADDED) VALUES (generateUUIDv4(), ?, ?, ?, ?, now());
+#     args_mapping: root = [ this.AGE, this.GENDER, this.LASTNAME, this.FIRSTNAME]
+
+# output:
+#   sql_insert:
+#     driver: "clickhouse"
+#     dsn: clickhouse://default@host:9000/testdb?
+#     table: hydrated_users2
+#     columns: [ID, AGE, GENDER, LASTNAME, FIRSTNAME]
+#     args_mapping: root = [ this.ID , this.AGE, this.GENDER, this.LASTNAME, this.FIRSTNAME ] 
